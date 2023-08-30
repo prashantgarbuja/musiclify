@@ -14,9 +14,6 @@ COPY .mvn .mvn
 # Make the Maven Wrapper executable
 RUN chmod +x mvnw
 
-# Download project dependencies, but don't run tests
-RUN mvn dependency:go-offline -B
-
 # Copy the application source code
 COPY src ./src
 
