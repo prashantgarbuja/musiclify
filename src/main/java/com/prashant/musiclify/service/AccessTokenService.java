@@ -30,7 +30,6 @@ public class AccessTokenService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		System.out.println("Client ID is "+properties.getClientId());
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		map.add("client_id", properties.getClientId());
 		map.add("grant_type", "authorization_code");
