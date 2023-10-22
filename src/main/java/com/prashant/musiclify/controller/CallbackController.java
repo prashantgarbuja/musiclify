@@ -34,7 +34,7 @@ public class CallbackController {
 			return Template.CALLBACK_FAILURE;
 		}
 
-		session.setAttribute("code", code);
+//		session.setAttribute("code", code);
 		String token = accessToken.getToken(code);
 
 		session.setAttribute("accessToken", token);
