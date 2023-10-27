@@ -1,2 +1,2 @@
 *.java linguist-language=Java
-src/main/resources/* linguist-vendored
+src/main/resources/** linguist-vendored
