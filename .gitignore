@@ -1,7 +1,7 @@
 HELP.md
 target/
 bin/
-src/main/resources/application.properties
+src/main/resources/application-development.properties
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
