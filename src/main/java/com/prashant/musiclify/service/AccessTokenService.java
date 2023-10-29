@@ -24,6 +24,7 @@ public class AccessTokenService {
 	private final RestTemplate restTemplate;
 	private final SpotifyAppConfigurationProperties spotifyAppConfigurationProperties;
 	private static final String URL = "https://accounts.spotify.com/api/token";
+	ResponseEntity<AccessTokenDto> response;
 
 	public String getToken(String code) {
 		final var properties = spotifyAppConfigurationProperties.getApp();
@@ -39,8 +40,15 @@ public class AccessTokenService {
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
-		ResponseEntity<AccessTokenDto> response = restTemplate.postForEntity(URL, request, AccessTokenDto.class);
+		response = restTemplate.postForEntity(URL, request, AccessTokenDto.class);
 		return response.getBody().getAccess_token();
+	}
+
+	public String getExpiresIn() {
+		if (response.getBody() != null) {
+			return response.getBody().getExpires_in();
+		}
+		return null;
 	}
 
 }
