@@ -1,5 +1,6 @@
 package com.prashant.musiclify.controller;
 
+import com.prashant.musiclify.service.SpotifyUrlService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RedirectController {
 
+	private final SpotifyUrlService spotifyUrlService;
 	private final ProfileDetailService userDetails;
 	private final CurrentPlayingService currentPlaying;
 
@@ -26,6 +28,11 @@ public class RedirectController {
 	public String redirectToCallbackSuccess(final HttpSession session, final Model model) {
 
 		String token = (String) session.getAttribute("accessToken");
+		Long expiration_time = (Long) session.getAttribute("expiration_time");
+		if (token == null || !isTokenValid(expiration_time)) {
+			model.addAttribute("url", spotifyUrlService.getAuthorizationURL());
+			return Template.INDEX;
+		}
 		model.addAttribute("accessToken", token);
 		model.addAttribute("userName", userDetails.getUsername(token));
 
@@ -36,6 +43,9 @@ public class RedirectController {
 			model.addAttribute("display", 0);
 		}
 		return Template.CALLBACK_SUCCESS;
+	}
+	boolean isTokenValid(Long expiration_time) {
+		return System.currentTimeMillis() < expiration_time;
 	}
 
 }
